@@ -9,6 +9,8 @@ jobs:
   ejemplo:
     runs-on: ubuntu-latest
     steps:
-      - name: Mostrar Mensaje
-        run: echo "¡Hola, Github Actions!"
-       
+      - name: Mostrar informacion de evento
+        run: |
+         echo "Repositorio: ${{github.repository}}"
+         echo "Actor : ${{ github.actor}}"
+         echo "Evento ${{github.event_name}}"
