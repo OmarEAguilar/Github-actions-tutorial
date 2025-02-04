@@ -7,6 +7,7 @@
 //----------------------------------------------------------
 //Cambios 03/02/25
 //Nueva Variable jumpDistance que mide la distancia desde el punto en el que el jugador saltó hasta el lugar donde aterrizó.
+//se corrigio el isGrounded y diferentes debugs para el movimiento
 
 using UnityEngine;
 
@@ -31,6 +32,11 @@ public class PlayerMovement : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+
+        if (groundCheck == null)
+        {
+            Debug.LogWarning("groundCheck no está asignado en el inspector.");
+        }
     }
 
     void Update()
@@ -39,19 +45,22 @@ public class PlayerMovement : MonoBehaviour
         moveInput = new Vector2(Input.GetAxisRaw("Horizontal"), 0).normalized;
 
         // Verificar si el jugador está tocando el suelo
-        isGrounded = Physics2D.OverlapCircle(groundCheck.position, 0.1f, groundLayer);
+        isGrounded = IsGrounded();
+        Debug.Log("IsGrounded: " + isGrounded);
 
         // Salto
         if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
         {
+            Debug.Log("Saltando desde la posición: " + rb.position);
             rb.velocity = new Vector2(rb.velocity.x, jumpForce);
             lastGroundedPosition = rb.position; // Guardar la posición desde donde saltó
         }
-        
+
         // Calcular distancia de salto
-        if (isGrounded)
+        if (isGrounded && lastGroundedPosition != Vector2.zero)
         {
             jumpDistance = Vector2.Distance(lastGroundedPosition, rb.position);
+            Debug.Log("Distancia de salto: " + jumpDistance);
         }
     }
 
@@ -69,5 +78,15 @@ public class PlayerMovement : MonoBehaviour
 
         // Aplicamos la velocidad calculada
         rb.velocity = new Vector2(movement, rb.velocity.y);
+
+        Debug.Log("Velocidad objetivo: " + targetSpeed);
+        Debug.Log("Velocidad actual: " + rb.velocity.x);
+        Debug.Log("Diferencia de velocidad: " + speedDiff);
+        Debug.Log("Velocidad calculada: " + movement);
+    }
+
+    bool IsGrounded()
+    {
+        return Physics2D.OverlapCircle(groundCheck.position, 0.1f, groundLayer);
     }
 }
