@@ -9,6 +9,6 @@ jobs:
   ejemplo:
     runs-on: ubuntu-latest
     steps:
-      - name: Mostrar Mensaje
-        run: echo "¡Hola, Github Actions!"
-       
+      - name: Mostrar API Key (No se mostrara por seguridad)
+        run: |
+         echo "API Key: ${{ secrets.API_KEY }} "
