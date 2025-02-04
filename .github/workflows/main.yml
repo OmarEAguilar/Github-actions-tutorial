@@ -9,6 +9,8 @@ jobs:
   ejemplo:
     runs-on: ubuntu-latest
     steps:
-      - name: Mostrar API Key (No se mostrara por seguridad)
+      - name: Mostrar informacion de evento
         run: |
-         echo "API Key: ${{ secrets.API_KEY }} "
+         echo "Repositorio: ${{github.repository}}"
+         echo "Actor : ${{ github.actor}}"
+         echo "Evento ${{github.event_name}}
