@@ -13,4 +13,4 @@ jobs:
         run: |
          echo "Repositorio: ${{github.repository}}"
          echo "Actor : ${{ github.actor}}"
-         echo "Evento ${{github.event_name}}
+         echo "Evento ${{github.event_name}}"
