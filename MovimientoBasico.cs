@@ -27,7 +27,7 @@ public class PlayerMovement : MonoBehaviour
     private Rigidbody2D rb;
     private Vector2 moveInput;
     private bool isGrounded;
-    private Vector2 lastGroundedPosition;
+    private Vector2 lastGroundedPosition; //muestra la ultima posicion donde toco suelo
 
     void Start()
     {
