@@ -5,6 +5,8 @@
 //El cálculo de velocidad no tomaba en cuenta la velocidad real del Rigidbody2D.
 //Vector2.Lerp() no era la mejor opción → Se usa Mathf.Lerp() para interpolar un solo valor.
 //----------------------------------------------------------
+//Cambios 03/02/25
+//Nueva Variable jumpDistance que mide la distancia desde el punto en el que el jugador saltó hasta el lugar donde aterrizó.
 
 using UnityEngine;
 
@@ -19,10 +21,12 @@ public class PlayerMovement : MonoBehaviour
     public float jumpForce = 8f;       // Fuerza del salto
     public Transform groundCheck;      // Objeto vacío como detector de suelo
     public LayerMask groundLayer;      // Capa del suelo
+    public float jumpDistance = 0f;    // Distancia de salto
 
     private Rigidbody2D rb;
     private Vector2 moveInput;
     private bool isGrounded;
+    private Vector2 lastGroundedPosition;
 
     void Start()
     {
@@ -41,6 +45,13 @@ public class PlayerMovement : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
         {
             rb.velocity = new Vector2(rb.velocity.x, jumpForce);
+            lastGroundedPosition = rb.position; // Guardar la posición desde donde saltó
+        }
+        
+        // Calcular distancia de salto
+        if (isGrounded)
+        {
+            jumpDistance = Vector2.Distance(lastGroundedPosition, rb.position);
         }
     }
 
